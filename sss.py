@@ -29,5 +29,13 @@ def add_product():
             "error": "Bad Request",
             "message": "Please provide all required product information, including name, price, and stock."
         }), 400
+    
+    new_id = max([p["product_id"] for p in products, default=0]) + 1
+    new_product = {
+        "product_id": new_id,
+        "name": data["name"],
+        "price": data["price"],
+        "stock": data["stocks"]
+    } 
 if __name__ == '__main__':
     sss.run(debug=True)
