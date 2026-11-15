@@ -32,10 +32,11 @@ def add_product():
     
     new_id = max([p["product_id"] for p in products["products"]], default=0) + 1
     new_product = {
+        "message": "Product added successfully.",
         "product_id": new_id,
-        "name": data["name"],
-        "price": data["price"],
-        "stock": data["stock"]
+            "name": data["name"],
+            "price": data["price"],
+            "stock": data["stock"]
     } 
 
     products["products"].append(new_product)
