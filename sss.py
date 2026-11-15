@@ -61,6 +61,19 @@ def update_product(id):
         "product": product
     }), 200
 
+@sss.route('/products/<int:id>', methods=['DELETE'])
+def delete_product(id):
+    global products
+    product = next((p for p in products["products"] if p["product_id"] == id), None)
+
+    if product is None:
+        return jsonify({"error": "Product not found"}), 404
+
+    products["products"] = [p for p in products["products"] if p["product_id"] != id]
+    return jsonify({
+        "message": "Product deleted successfully.",
+        "product": product
+    }), 200
 
 if __name__ == '__main__':
     sss.run(debug=True)
