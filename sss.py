@@ -1,7 +1,14 @@
 from flask import Flask, jsonify, request
-from data import products
 
 sss = Flask(__name__)
+
+products = {
+    "products": [
+        {"product_id": 1, "name": "Sunsilk", "price": 8, "stock": 75},
+        {"product_id": 2, "name": "555 Sardines", "price": 35, "stock": 105},
+        {"product_id": 3, "name": "DingDong", "price": 15, "stock": 24}
+    ]
+}
 
 @sss.route('/products', methods=['GET'])
 def get_products():
@@ -33,6 +40,27 @@ def add_product():
 
     products["products"].append(new_product)
     return jsonify(new_product), 201
+@sss.route('/products/<int:id>', methods=['PUT'])
+def update_product(id):
+    data = request.get_json()
+    product = next((p for p in products["products"] if p["product_id"] == id), None)
+
+    if product is None:
+        return jsonify({"error": "Product not found"}), 404
+
+    if data:
+        if "name" in data:
+            product["name"] = data["name"]
+        if "price" in data:
+            product["price"] = data["price"]
+        if "stock" in data:
+            product["stock"] = data["stock"]
+
+    return jsonify({
+        "message": "Product updated successfully.",
+        "product": product
+    }), 200
+
 
 if __name__ == '__main__':
     sss.run(debug=True)
