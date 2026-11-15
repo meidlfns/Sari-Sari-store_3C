@@ -21,7 +21,7 @@ def get_product(id):
         return jsonify({"error": "Products Not Found"}), 404
     return jsonify(product), 200
 
-@sss.route('/products', method=['POST'])
+@sss.route('/products', methods=['POST'])
 def add_product():
     data = request.get_json()
     if not data or "name" not in data or "price" not in data or "stock" not in data:
@@ -30,7 +30,7 @@ def add_product():
             "message": "Please provide all required product information, including name, price, and stock."
         }), 400
     
-    new_id = max([p["product_id"] for p in products], default=0) + 1
+    new_id = max([p["product_id"] for p in products["products"]], default=0) + 1
     new_product = {
         "product_id": new_id,
         "name": data["name"],
@@ -38,7 +38,7 @@ def add_product():
         "stock": data["stock"]
     } 
 
-    products.append(new_product)
+    products["products"].append(new_product)
     return jsonify(new_product), 201
 
 if __name__ == '__main__':
