@@ -1,3 +1,5 @@
+from itertools import product
+
 from flask import Flask, jsonify, request
 
 sss = Flask(__name__)
@@ -9,3 +11,10 @@ sss = Flask(__name__)
         {"product_id": 3, "name": "DingDong":, "price": 15, "stock": 24}
     ]
 }
+
+@sss.route('/products', methods=['GET'])
+def get_products():
+    return jsonify({"products": products}), 200
+
+if __name__ == '__main__':
+    sss.run(debug=True)
