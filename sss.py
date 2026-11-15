@@ -21,5 +21,13 @@ def get_product(id):
         return jsonify({"error": "Products Not Found"}), 404
     return jsonify(product), 200
 
+@sss.route('/products', method=['POST'])
+def add_product():
+    data = request.get_json()
+    if not data or "name" not in data or "price" not in data or "stock" not in data:
+        return jsonify({
+            "error": "Bad Request",
+            "message": "Please provide all required product information, including name, price, and stock."
+        }), 400
 if __name__ == '__main__':
     sss.run(debug=True)
