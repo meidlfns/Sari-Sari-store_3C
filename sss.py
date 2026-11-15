@@ -12,6 +12,11 @@ products = {
 
 @sss.route('/products', methods=['GET'])
 def get_products():
+    if not products:
+        return jsonify({
+            "error": "Internal Server Error",
+            "message": "Unable to retrieve product information. Please try again later."
+        }), 500
     return jsonify(products), 200
 
 @sss.route('/products/<int:id>', methods=['GET'])
