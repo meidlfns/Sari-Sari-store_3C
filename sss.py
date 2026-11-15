@@ -35,7 +35,11 @@ def add_product():
         "product_id": new_id,
         "name": data["name"],
         "price": data["price"],
-        "stock": data["stocks"]
+        "stock": data["stock"]
     } 
+
+    products.append(new_product)
+    return jsonify(new_product), 201
+    
 if __name__ == '__main__':
     sss.run(debug=True)
